@@ -5,10 +5,10 @@
  */
 package com.yahoo.egads.data;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.google.common.collect.Lists;
 
 /**
  * Class for holding a weighted value that can then be aggregated when stored
@@ -130,7 +130,7 @@ public class WeightedValue implements Comparable<WeightedValue> {
             }
             return ctr;
         } else if (agg.equals("MEDIAN")) {
-            final List<Double> sorted = Lists.newArrayList();
+            final List<Double> sorted = new ArrayList<>();
             for (final WeightedValue v : values) {
                 if (Double.isFinite(v.value)) {
                     sorted.add(v.value);

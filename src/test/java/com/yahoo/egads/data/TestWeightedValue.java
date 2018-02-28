@@ -8,17 +8,16 @@ package com.yahoo.egads.data;
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.testng.annotations.Test;
-
-import com.google.common.collect.Lists;
 
 public class TestWeightedValue {
 
     @Test
     public void aggregate() throws Exception {
-        final List<WeightedValue> values = Lists.newArrayList();
+        final List<WeightedValue> values = new ArrayList();
         values.add(new WeightedValue(1.5D, 5));
         values.add(new WeightedValue(42.5D, 1));
         values.add(new WeightedValue(-1.5D, 0));
@@ -83,21 +82,21 @@ public class TestWeightedValue {
     
     @Test (expectedExceptions = IllegalArgumentException.class)
     public void aggregateNullAgg() throws Exception {
-        final List<WeightedValue> values = Lists.newArrayList();
+        final List<WeightedValue> values = new ArrayList();
         values.add(new WeightedValue(1.5D, 5));
         WeightedValue.aggregate(values, null);
     }
     
     @Test (expectedExceptions = IllegalArgumentException.class)
     public void aggregateEmptyAgg() throws Exception {
-        final List<WeightedValue> values = Lists.newArrayList();
+        final List<WeightedValue> values = new ArrayList();
         values.add(new WeightedValue(1.5D, 5));
         WeightedValue.aggregate(values, "");
     }
     
     @Test (expectedExceptions = IllegalArgumentException.class)
     public void aggregateUnknownAgg() throws Exception {
-        final List<WeightedValue> values = Lists.newArrayList();
+        final List<WeightedValue> values = new ArrayList();
         values.add(new WeightedValue(1.5D, 5));
         WeightedValue.aggregate(values, "NOTIMPLEMENTED");
     }

@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
@@ -19,8 +20,8 @@ import org.slf4j.LoggerFactory;
 
 import com.yahoo.egads.data.TimeSeries.Entry;
 import com.yahoo.egads.data.WeightedValue;
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.Lists;
+//import com.google.common.annotations.VisibleForTesting;
+
 import com.yahoo.egads.data.TimeSeries.DataSequence;
 
 /**
@@ -234,7 +235,7 @@ public class OlympicModel2 extends TimeSeriesAbstractModel {
         
         windowTimes = new ZonedDateTime[pastWindows];
         indices = new int[pastWindows];
-        model = Lists.newArrayList();
+        model = new ArrayList<>();
     }
     
     @Override
@@ -246,7 +247,7 @@ public class OlympicModel2 extends TimeSeriesAbstractModel {
                 .atZone(zone);
         ZonedDateTime end_ts = model_ts.plus(windowSize, windowUnits);
         int prediction_index = 0;
-        final List<WeightedValue> accumulator = Lists.newArrayList();
+        final List<WeightedValue> accumulator = new ArrayList<>();
         
         // start the loop and break once we've filled the model.
         while (true) {
@@ -260,7 +261,7 @@ public class OlympicModel2 extends TimeSeriesAbstractModel {
                 windowTimes[i] = windowTimes[i].plus(interval,
                         intervalUnits);
                 long interval_end = windowTimes[i].toEpochSecond();
-                final List<Double> doubles = Lists.newArrayList();
+                final List<Double> doubles = new ArrayList<>();
                 long first_ts = -1;
                 while (indices[i] < size
                         && data.get(indices[i]).time < interval_end) {
@@ -371,7 +372,7 @@ public class OlympicModel2 extends TimeSeriesAbstractModel {
      * @throws IllegalArgumentException
      *             if the data object was null or empty.
      */
-    @VisibleForTesting
+    //@VisibleForTesting
     void initializeIndices(final DataSequence data, final long start) {
         if (data == null || data.size() < 1) {
             throw new IllegalArgumentException(

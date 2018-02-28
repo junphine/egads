@@ -29,9 +29,8 @@ public class JsonEncoder {
         toJson(object, jsonOut);
         return jsonOut.toString();
     }
-
-    public static void // modifies json_out
-    toJson(Object object, JSONStringer json_out) throws Exception {
+    // modifies json_out
+    public static void  toJson(Object object, JSONStringer json_out) throws Exception {
         json_out.object();
         // for each inherited class...
         for (Class c = object.getClass(); c != Object.class; c = c
