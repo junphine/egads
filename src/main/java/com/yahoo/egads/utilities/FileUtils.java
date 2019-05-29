@@ -46,13 +46,17 @@ public class FileUtils {
             // Read the file line by line
             boolean firstLine = true;
             while ((line = fileReader.readLine()) != null) {
+            	
+            	// Skip comment lines
+                if ( line.startsWith( "#" ) )
+                    continue;
                 // Get all tokens available in line.
                 String[] tokens = line.split(delimiter);
                 Long curTimestamp = null;
                 
                 // Check for the case where there is more than one line preceding the data 
                 if (firstLine == true) {
-                    if (!isNumeric(tokens[0]) && tokens[0].equals("timestamp") == false) {
+                    if (!isNumeric(tokens[0]) && (tokens[0].equals("timestamp") == false && tokens[0].equals("year") == false)) {
                         continue;
                     }
                 }

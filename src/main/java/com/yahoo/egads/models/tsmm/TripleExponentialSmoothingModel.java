@@ -37,7 +37,7 @@ import java.util.*;
 // smoothing model but adds another component which takes into account any seasonality - or periodicity - in the data.
 public class TripleExponentialSmoothingModel extends TimeSeriesAbstractModel {
     // methods ////////////////////////////////////////////////
-
+	private int periodsPerYear = 12;
     // The model that will be used for forecasting.
     private ForecastingModel forecaster;
     
@@ -47,6 +47,7 @@ public class TripleExponentialSmoothingModel extends TimeSeriesAbstractModel {
     public TripleExponentialSmoothingModel(Properties config) {
         super(config);
         modelName = "TripleExponentialSmoothingModel";
+        periodsPerYear = Integer.parseInt(config.getProperty("PeriodsPerYear","12"));
     }
 
     public void reset() {
@@ -64,7 +65,7 @@ public class TripleExponentialSmoothingModel extends TimeSeriesAbstractModel {
             observedData.add(dp);
         }
         observedData.setTimeVariable("x"); 
-        observedData.setPeriodsPerYear(12);
+        observedData.setPeriodsPerYear(periodsPerYear);
         
         // TODO: Make weights configurable.
         forecaster = new net.sourceforge.openforecast.models.TripleExponentialSmoothingModel(0.75, 0.001, 0.001);

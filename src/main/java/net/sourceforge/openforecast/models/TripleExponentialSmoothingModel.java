@@ -509,7 +509,7 @@ public class TripleExponentialSmoothingModel extends AbstractTimeBasedModel
         periodsPerYear = dataSet.getPeriodsPerYear();
 
         // Check we have the minimum amount of data points
-        if ( dataSet.size() < NUMBER_OF_YEARS*periodsPerYear )
+        if ( dataSet.size() <= NUMBER_OF_YEARS*periodsPerYear )
             throw new IllegalArgumentException("TripleExponentialSmoothing models require a minimum of a full two years of data to initialize the model.");
 
         // Calculate initial values for base and trend

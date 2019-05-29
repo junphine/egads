@@ -61,6 +61,8 @@ public class MultipleLinearRegressionModel extends AbstractForecastingModel
      */
     protected double intercept = 0.0;
     
+    protected String[] independentVariable;
+    
     /**
      * An mapping of variable names to coefficients for this multiple variable
      * linear regression model. These are initialized following a call to init.
@@ -119,6 +121,8 @@ public class MultipleLinearRegressionModel extends AbstractForecastingModel
         //  use all that exist in this data set
         if ( coefficient == null )
             setIndependentVariables( varNames );
+        //add@byron
+        varNames = this.independentVariable;
         
         int n = varNames.length;
         double a[][] = new double[n+1][n+2];
@@ -168,8 +172,9 @@ public class MultipleLinearRegressionModel extends AbstractForecastingModel
         
         // Assign coefficients to independent variables
         intercept = coeff[0];
-        for ( int i=1; i<n+1; i++ )
+        for ( int i=1; i<n+1; i++ ){
             coefficient.put( varNames[i-1], new Double(coeff[i]) );
+        }
         
         // Calculate the accuracy indicators
         calculateAccuracyIndicators( dataSet );
@@ -332,6 +337,7 @@ public class MultipleLinearRegressionModel extends AbstractForecastingModel
      */
     protected void setIndependentVariables(String[] independentVariable)
     {
+    	this.independentVariable = independentVariable.clone();
         // Create a new hashtable of just the right size
         coefficient = new Hashtable<String,Double>( independentVariable.length );
         

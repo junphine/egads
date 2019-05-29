@@ -56,10 +56,7 @@ import net.sourceforge.openforecast.Observation;
  * @since 0.2
  */
 public class MultiplePolynomialRegressionModel extends MultipleLinearRegressionModel
-{
-    
-    
-    private String[] independentVariable;
+{  
     private String[] newIndependentVariable;
 
     /**
@@ -138,10 +135,10 @@ public class MultiplePolynomialRegressionModel extends MultipleLinearRegressionM
             {
             	for(int i = 0; i < setTo.length; i++)
                     if(setTo[i] == 1){
-                    	newIndependentVariable[index] += varNames[i];
+                    	newIndependentVariable[index] += this.independentVariable[i];
                     }
                     else if(setTo[i] > 1){
-                    	newIndependentVariable[index] += varNames[i]+"^"+setTo[i];
+                    	newIndependentVariable[index] += this.independentVariable[i]+"^"+setTo[i];
                     }
             	
             	index++;
@@ -150,6 +147,7 @@ public class MultiplePolynomialRegressionModel extends MultipleLinearRegressionM
             }
             while(setTo[this.independentVariable.length-1] <= degree); 
         }
+        
         varNames = this.newIndependentVariable;
         double a[][] = new double[n+1][n+2];
         

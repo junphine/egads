@@ -95,8 +95,7 @@ import com.yahoo.egads.data.TimeSeries.DataSequence;
  *   
  */
 public class OlympicModel2 extends TimeSeriesAbstractModel {
-    private static final Logger LOG = LoggerFactory.getLogger(
-            OlympicModel2.class);
+    private static final Logger LOG = LoggerFactory.getLogger(OlympicModel2.class);
     
     /** Auto generated UID. */
     private static final long serialVersionUID = 4322074416636265537L;

@@ -53,27 +53,6 @@ import net.sourceforge.openforecast.DataSet;
  */
 public class MovingAverageModel extends WeightedMovingAverageModel
 {
-    /**
-     * Constructs a new moving average forecasting model. For a valid model to
-     * be constructed, you should call init and pass in a data set containing
-     * a series of data points with the time variable initialized to identify
-     * the independent variable.
-     */
-    public MovingAverageModel()
-    {
-    }
-    
-    /**
-     * Constructs a new moving average forecasting model, using the given name
-     * as the independent variable.
-     * @param independentVariable the name of the independent variable to use
-     * in this model.
-     * @deprecated As of 0.4, replaced by {@link #MovingAverageModel}.
-     */
-    public MovingAverageModel( String independentVariable )
-    {
-        super( independentVariable );
-    }
     
     /**
      * Constructs a new moving average forecasting model, using the specified

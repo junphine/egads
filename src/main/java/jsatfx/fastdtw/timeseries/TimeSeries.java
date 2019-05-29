@@ -423,11 +423,13 @@ public class TimeSeries {
 	// private static final char DEFAULT_DELIMITER = 44;
 	//
 	// private static final boolean DEFAULT_IS_LABELED = true;
-
+	// X的各维字段名称
 	private final ArrayList<String> labels;
 
+	// Y
 	private final ArrayList<Double> timeReadings;
 
+	// X
 	private final ArrayList<TimeSeriesPoint> tsArray;
 
 }

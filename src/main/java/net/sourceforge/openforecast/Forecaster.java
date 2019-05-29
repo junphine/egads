@@ -22,8 +22,10 @@ package net.sourceforge.openforecast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
 import net.sourceforge.openforecast.models.MovingAverageModel;
 import net.sourceforge.openforecast.models.MultipleLinearRegressionModel;
+import net.sourceforge.openforecast.models.MultiplePolynomialRegressionModel;
 import net.sourceforge.openforecast.models.PolynomialRegressionModel;
 import net.sourceforge.openforecast.models.RegressionModel;
 import net.sourceforge.openforecast.models.SimpleExponentialSmoothingModel;
@@ -89,7 +91,7 @@ public class Forecaster
     {
         String independentVariable[] = dataSet.getIndependentVariables();
         ForecastingModel bestModel = null;
-        
+        String bestAvailVariable = null;
         // Try single variable models
         for ( int i=0; i<independentVariable.length; i++ )
             {
@@ -98,8 +100,10 @@ public class Forecaster
                 // Try the Regression Model
                 model = new RegressionModel( independentVariable[i] );
                 model.init( dataSet );
-                if ( betterThan( model, bestModel, evalMethod ) )
+                if ( betterThan( model, bestModel, evalMethod ) ){
                     bestModel = model;
+                    bestAvailVariable = independentVariable[i];
+                }
                 
                 // Try the Polynomial Regression Model
                 // Note: if order is about the same as dataSet.size() then
@@ -107,14 +111,18 @@ public class Forecaster
                 //  unreliable - forecasts. We "guess" at a reasonable order
                 //  for the polynomial curve based on the number of
                 //  observations.
-                int order = 10;
-                if ( dataSet.size() < order*order )
-                    order = (int)(Math.sqrt(dataSet.size()))-1;
-                model = new PolynomialRegressionModel( independentVariable[i],
-                                                       order );
-                model.init( dataSet );
-                if ( betterThan( model, bestModel, evalMethod ) )
-                    bestModel = model;
+                int max_order = 10;
+                if ( dataSet.size() < max_order*max_order )
+                	max_order = (int)(Math.sqrt(dataSet.size()))+2;
+                
+                for(int order=2;order<=max_order;order++){
+	                model = new PolynomialRegressionModel( independentVariable[i], order);
+	                model.init( dataSet );
+	                if ( betterThan( model, bestModel, evalMethod ) ){
+	                    bestModel = model;
+	                    //bestAvailVariable = independentVariable[i];
+	                }
+                }
             }
         
         
@@ -123,6 +131,138 @@ public class Forecaster
         // Create a list of available variables
         ArrayList<String> availableVariables
             = new ArrayList<String>(independentVariable.length);
+        for ( int i=0; i<independentVariable.length; i++ )
+            availableVariables.add( independentVariable[i] );
+        
+        // Create a list of variables to use - initially empty
+        ArrayList<String> bestVariables = new ArrayList<String>(independentVariable.length);
+        
+        // Add best variable to list of vars. to use
+        if(bestAvailVariable!=null){
+        	 // Remove best variable from list of available vars
+            int bestVarIndex = availableVariables.indexOf( bestAvailVariable );
+            availableVariables.remove( bestVarIndex );
+        	bestVariables.add(bestAvailVariable);
+        }
+        
+        // While some variables still available to consider
+        while ( availableVariables.size() > 0 )
+            {
+                int count = bestVariables.size();
+                String workingList[] = new String[count+1];
+                if ( count > 0 )
+                    for ( int i=0; i<count; i++ )
+                        workingList[i] = (String)bestVariables.get(i);                
+                
+                bestAvailVariable = null;
+                // For each available variable
+                Iterator<String> it = availableVariables.iterator();
+                while ( it.hasNext() )
+                    {
+                        // Get current variable
+                        String currentVar = it.next();
+                        
+                       //add@byron tmp init bestAvailVariable, must not be null.
+                        if(bestAvailVariable==null){
+                        	bestAvailVariable = currentVar; 
+                        }
+                        // Add variable to list to use for regression
+                        workingList[count] = currentVar;
+                        
+                        // Do multiple variable linear regression
+                        ForecastingModel model  = new MultipleLinearRegressionModel( workingList );
+                        model.init( dataSet );
+                        
+                        //  If best so far, then save best variable
+                        if ( betterThan( model, bestModel, evalMethod ) )
+                            {
+                                bestModel = model;
+                                bestAvailVariable = currentVar;
+                            }
+                        
+                        // Remove the current variable from the working list
+                        workingList[count] = null;
+                    }
+                
+                // If no better model could be found (by adding another
+                //     variable), then we're done
+                if ( bestAvailVariable == null )
+                    break;
+                
+                // Remove best variable from list of available vars
+                int bestVarIndex = availableVariables.indexOf( bestAvailVariable );
+                availableVariables.remove( bestVarIndex );
+                
+                // Add best variable to list of vars. to use
+                bestVariables.add( count, bestAvailVariable );                
+                count++;
+            }
+        
+        
+        // Try time-series models
+        if ( dataSet.getTimeVariable() != null )
+            {
+        		ForecastingModel model;
+               
+                // Try moving average model using periods per year if avail.
+                if ( dataSet.getPeriodsPerYear() > 0 ) {
+                	model = new MovingAverageModel( dataSet.getPeriodsPerYear() );
+                    model.init( dataSet );
+                    if ( betterThan( model, bestModel, evalMethod ) )
+                            bestModel = model;
+                }
+                else{
+                	 // Try moving average model
+            		for(int period=4;period<=60 && period<=dataSet.size()/2;period+=1){
+    	                model = new MovingAverageModel(period);
+    	                model.init( dataSet );
+    	                if ( betterThan( model, bestModel, evalMethod ) )
+    	                    bestModel = model;
+            		}                    
+                }
+                
+                // TODO: Vary the period and try other MA models
+                // TODO: Consider appropriate use of time period in this
+                
+                // Try the best fit simple exponential smoothing model
+                model = SimpleExponentialSmoothingModel.getBestFitModel(dataSet);
+                if ( betterThan( model, bestModel, evalMethod ) )
+                    bestModel = model;
+                
+                // Try the best fit double exponential smoothing model
+                model = DoubleExponentialSmoothingModel.getBestFitModel(dataSet);
+                if ( betterThan( model, bestModel, evalMethod ) )
+                    bestModel = model;
+                
+                if ( dataSet.getPeriodsPerYear() > 1 ){
+	                // Try the best fit triple exponential smoothing model
+	                model = TripleExponentialSmoothingModel.getBestFitModel(dataSet);
+	                if ( betterThan( model, bestModel, evalMethod ) )
+	                    bestModel = model;
+                }
+                
+            }
+        
+        return bestModel;
+    }
+    
+    
+    public static ForecastingModel getBestPolynomialForecast( DataSet dataSet )
+    {
+        return getBestPolynomialForecast( dataSet, EvaluationCriteria.BLEND );
+    }
+    
+    
+    public static ForecastingModel getBestPolynomialForecast( DataSet dataSet, EvaluationCriteria evalMethod )
+    {
+        String independentVariable[] = dataSet.getIndependentVariables();
+        ForecastingModel bestModel = null;      
+        
+        
+        // Try multiple variable models
+        
+        // Create a list of available variables
+        ArrayList<String> availableVariables = new ArrayList<String>(independentVariable.length);
         for ( int i=0; i<independentVariable.length; i++ )
             availableVariables.add( independentVariable[i] );
         
@@ -150,17 +290,31 @@ public class Forecaster
                         // Add variable to list to use for regression
                         workingList[count] = currentVar;
                         
-                        // Do multiple variable linear regression
-                        ForecastingModel model
-                            = new MultipleLinearRegressionModel( workingList );
-                        model.init( dataSet );
                         
-                        //  If best so far, then save best variable
-                        if ( betterThan( model, bestModel, evalMethod ) )
-                            {
-                                bestModel = model;
-                                bestAvailVariable = currentVar;
-                            }
+                        // Try the Polynomial Regression Model
+                        // Note: if order is about the same as dataSet.size() then
+                        //  we'll get a good/great fit, but highly variable - and
+                        //  unreliable - forecasts. We "guess" at a reasonable order
+                        //  for the polynomial curve based on the number of
+                        //  observations.
+                        int order = 10;
+                        if ( dataSet.size() < order*order*(count+1) )
+                            order = (int)(Math.sqrt(dataSet.size())/(count+1))+1;
+                        
+                        for(int degree=1;degree<=order;degree++){
+                        
+	                        // Do multiple variable linear regression
+	                        ForecastingModel model = new MultiplePolynomialRegressionModel(degree, workingList );
+	                        model.init( dataSet );
+                        
+	                        //  If best so far, then save best variable
+	                        if ( betterThan( model, bestModel, evalMethod ) )
+	                            {
+	                                bestModel = model;
+	                                bestAvailVariable = currentVar;
+	                            }
+                        
+                        }
                         
                         // Remove the current variable from the working list
                         workingList[count] = null;
@@ -181,47 +335,8 @@ public class Forecaster
                 count++;
             }
         
-        
-        // Try time-series models
-        if ( dataSet.getTimeVariable() != null )
-            {
-                // Try moving average model
-                ForecastingModel model = new MovingAverageModel();
-                model.init( dataSet );
-                if ( betterThan( model, bestModel, evalMethod ) )
-                    bestModel = model;
-                
-                // Try moving average model using periods per year if avail.
-                if ( dataSet.getPeriodsPerYear() > 0 )
-                    {
-                        model = new MovingAverageModel( dataSet.getPeriodsPerYear() );
-                        model.init( dataSet );
-                        if ( betterThan( model, bestModel, evalMethod ) )
-                            bestModel = model;
-                    }
-                
-                // TODO: Vary the period and try other MA models
-                // TODO: Consider appropriate use of time period in this
-                
-                // Try the best fit simple exponential smoothing model
-                model = SimpleExponentialSmoothingModel.getBestFitModel(dataSet);
-                if ( betterThan( model, bestModel, evalMethod ) )
-                    bestModel = model;
-                
-                // Try the best fit double exponential smoothing model
-                model = DoubleExponentialSmoothingModel.getBestFitModel(dataSet);
-                if ( betterThan( model, bestModel, evalMethod ) )
-                    bestModel = model;
-                
-                // Try the best fit triple exponential smoothing model
-                model = TripleExponentialSmoothingModel.getBestFitModel(dataSet);
-                if ( betterThan( model, bestModel, evalMethod ) )
-                    bestModel = model;
-                
-                
-            }
-        
         return bestModel;
+        
     }
     
     /**

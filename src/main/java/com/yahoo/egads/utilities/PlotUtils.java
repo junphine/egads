@@ -43,27 +43,36 @@ import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
+
+import com.yahoo.egads.data.TimeSeries;
 import com.yahoo.egads.data.TimeSeries.DataSequence;
 import com.yahoo.egads.data.Anomaly;
+
 import java.util.ArrayList;
+import java.util.List;
+
 import com.yahoo.egads.data.Anomaly.IntervalSequence;
 import com.yahoo.egads.data.Anomaly.Interval;
+
 import java.awt.Color;
 import java.util.HashMap;
+
 import com.yahoo.egads.data.AnomalyErrorStorage;
+
 import java.util.Properties;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 // Draws the time-series.
-public class GUIUtils extends ApplicationFrame {
+public class PlotUtils extends ApplicationFrame {
 	private static final long serialVersionUID = 1L;
 	// Denominator used in the MASE error metric.
     float maseDenom = 0;
     private AnomalyErrorStorage aes = new AnomalyErrorStorage();
     private Properties config;
 
-    private GUIUtils(String title, DataSequence orig, DataSequence predicted, ArrayList<Anomaly> anomalyList, Properties config) {
+    private PlotUtils(String title, List<TimeSeries> orig, TimeSeries predicted, List<Anomaly> anomalyList, Properties config) {
          super(title);
          this.config = config;
          final JFreeChart chart = createCombinedChart(orig, predicted, anomalyList);
@@ -77,36 +86,38 @@ public class GUIUtils extends ApplicationFrame {
      *
      * @return The combined chart.
      */
-    private JFreeChart createCombinedChart(DataSequence tsOne, DataSequence tsTwo, ArrayList<Anomaly> anomalyList) {
+    private JFreeChart createCombinedChart(List<TimeSeries> X, TimeSeries tsTwo, List<Anomaly> anomalyList) {
 
-        // create subplot 1.
-        final XYDataset data1 = createDataset(tsOne, "Original");
-        final XYItemRenderer renderer1 = new StandardXYItemRenderer();
-        final NumberAxis rangeAxis1 = new NumberAxis("Original Value");
-        XYPlot subplot1 = new XYPlot(data1, null, rangeAxis1, renderer1);
-        subplot1.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
+    	 // parent plot.
+        final CombinedDomainXYPlot plot = new CombinedDomainXYPlot(new NumberAxis("Time"));
+        plot.setGap(10.0);
+        
+    	for(TimeSeries tsOne: X){
+	        // create subplot 1.
+	        final XYDataset data1 = createDataset(tsOne.data, tsOne.meta.name);
+	        final XYItemRenderer renderer1 = new StandardXYItemRenderer();
+	        final NumberAxis rangeAxis1 = new NumberAxis(tsOne.meta.name);
+	        XYPlot subplot1 = new XYPlot(data1, null, rangeAxis1, renderer1);
+	        subplot1.setRangeAxisLocation(AxisLocation.BOTTOM_OR_LEFT);
+	        // add the subplots.
+	        plot.add(subplot1, 1);
+    	}
         
         // plot anomalies on subplot 1.
-        addAnomalies(subplot1, anomalyList);
+        //-addAnomalies(subplot1, anomalyList);
         
         // create subplot 2.
-        final XYDataset data2 = createDataset(tsTwo, "Forecast");
+        final XYDataset data2 = createDataset(tsTwo.data, "Forecast");
         final XYItemRenderer renderer2 = new StandardXYItemRenderer();
         final NumberAxis rangeAxis2 = new NumberAxis("Forecast Value");
         rangeAxis2.setAutoRangeIncludesZero(false);
         final XYPlot subplot2 = new XYPlot(data2, null, rangeAxis2, renderer2);
-        subplot2.setRangeAxisLocation(AxisLocation.TOP_OR_LEFT);
-
-        // parent plot.
-        final CombinedDomainXYPlot plot = new CombinedDomainXYPlot(new NumberAxis("Time"));
-        plot.setGap(10.0);
-        
-        // add the subplots.
-        plot.add(subplot1, 1);
+        subplot2.setRangeAxisLocation(AxisLocation.TOP_OR_LEFT);        
+       
         plot.add(subplot2, 1);
         
         // Add anomaly score time-series.
-        addAnomalyTS(plot, tsOne, tsTwo);
+        //-addAnomalyTS(plot, X.get(0).data, tsTwo.data);
         
         plot.setOrientation(PlotOrientation.VERTICAL);
 
@@ -154,7 +165,7 @@ public class GUIUtils extends ApplicationFrame {
     /**
      * Add anomalies to the plot.
      */
-    public void addAnomalies(XYPlot plot, ArrayList<Anomaly> anomalyList) {
+    public void addAnomalies(XYPlot plot, List<Anomaly> anomalyList) {
         for (Anomaly a : anomalyList) {
             IntervalSequence is = a.intervals;
             for (Interval i : is) {
@@ -198,8 +209,8 @@ public class GUIUtils extends ApplicationFrame {
      * Starting point for the forecasting charting demo application.
      * @param args ignored.
      */
-    public static void plotResults(DataSequence orig, DataSequence predicted, ArrayList<Anomaly> anomalyList, Properties config) {
-        GUIUtils gui = new GUIUtils("EGADS GUI", orig, predicted, anomalyList, config);
+    public static void plotResults(List<TimeSeries> orig, TimeSeries predicted,List<Anomaly> anomalyList, Properties config) {
+        PlotUtils gui = new PlotUtils("EGADS GUI", orig, predicted, anomalyList, config);
         gui.pack();
         gui.setVisible(true);
         JFrame frame = new JFrame("EGADS GUI");
