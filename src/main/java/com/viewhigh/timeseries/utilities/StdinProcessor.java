@@ -4,16 +4,16 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
 
-// Class that implements EGADS STDIN input processor.
-
-import com.yahoo.egads.control.ProcessableObject;
-import com.yahoo.egads.control.ProcessableObjectFactory;
 import java.util.Properties;
+
+import com.viewhigh.timeseries.control.ProcessableObject;
+import com.viewhigh.timeseries.control.ProcessableObjectFactory;
+import com.viewhigh.timeseries.data.TimeSeries;
+
 import java.io.*;
 import java.util.ArrayList;
-import com.yahoo.egads.data.TimeSeries;
 
 public class StdinProcessor implements InputProcessor {
         

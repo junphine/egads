@@ -6,7 +6,7 @@
 
 // data structure
 
-package com.yahoo.egads.data;
+package com.viewhigh.timeseries.data;
 
 import java.util.ArrayList;
 import java.util.Date;

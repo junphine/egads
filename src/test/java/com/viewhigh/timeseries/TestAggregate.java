@@ -4,11 +4,12 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads;
+package com.viewhigh.timeseries;
 
-import com.yahoo.egads.data.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.viewhigh.timeseries.data.*;
 
 // Test the aggregation feature of the TimeSeries class.
 public class TestAggregate {

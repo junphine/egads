@@ -4,10 +4,12 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads.data;
+package com.viewhigh.timeseries.data;
 
-import com.yahoo.egads.data.TimeSeries.DataSequence;
 import java.util.Map;
+
+import com.viewhigh.timeseries.data.TimeSeries.DataSequence;
+
 import java.util.HashMap;
 import java.util.ArrayList;
 

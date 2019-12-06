@@ -4,15 +4,16 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads.models.tsmm;
+package com.viewhigh.timeseries.models.tsmm;
 
 import java.util.Properties;
-import java.util.Hashtable;
 
-import com.yahoo.egads.data.TimeSeries.Entry;
-import com.yahoo.egads.data.TimeSeries.DataSequence;
-import com.yahoo.egads.utilities.SpectralMethods;
-import com.yahoo.egads.utilities.SpectralMethods.FilteringMethod;
+import com.viewhigh.timeseries.data.TimeSeries.DataSequence;
+import com.viewhigh.timeseries.data.TimeSeries.Entry;
+import com.viewhigh.timeseries.utilities.SpectralMethods;
+import com.viewhigh.timeseries.utilities.SpectralMethods.FilteringMethod;
+
+import java.util.Hashtable;
 
 /**
  * SpectralSmoother implements the smoothing technique based on the Singular Value Decomposition (SVD) of the input time-series' Hankel matrix.

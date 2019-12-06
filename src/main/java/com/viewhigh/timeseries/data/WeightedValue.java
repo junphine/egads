@@ -3,7 +3,7 @@
  * Copyrights licensed under the GPL License.
  * See the accompanying LICENSE file for terms.
  */
-package com.yahoo.egads.data;
+package com.viewhigh.timeseries.data;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -6,7 +6,7 @@
 
 // ListUtils provides some basic math operation on numerical lists
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
 
 import java.util.Collections;
 import java.util.Iterator;

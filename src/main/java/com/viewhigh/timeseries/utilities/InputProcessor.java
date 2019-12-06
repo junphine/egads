@@ -4,7 +4,7 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
 
 // An interface which other classes extend
 // based on what type of input is passed in.

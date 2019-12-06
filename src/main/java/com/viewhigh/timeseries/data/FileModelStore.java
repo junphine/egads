@@ -1,4 +1,4 @@
-package com.yahoo.egads.data;
+package com.viewhigh.timeseries.data;
 
 import java.io.File;
 import java.io.FileInputStream;

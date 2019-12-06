@@ -4,20 +4,22 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads;
+package com.viewhigh.timeseries;
 
-import com.yahoo.egads.data.Model;
-import com.yahoo.egads.models.tsmm.*;
-import com.yahoo.egads.utilities.*;
-import com.yahoo.egads.data.*;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import com.yahoo.egads.control.ProcessableObject;
-import com.yahoo.egads.control.ProcessableObjectFactory;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.viewhigh.timeseries.control.ProcessableObject;
+import com.viewhigh.timeseries.control.ProcessableObjectFactory;
+import com.viewhigh.timeseries.data.*;
+import com.viewhigh.timeseries.models.tsmm.*;
+import com.viewhigh.timeseries.utilities.*;
+
 import net.sourceforge.openforecast.Forecaster;
 import net.sourceforge.openforecast.ForecastingModel;
 import net.sourceforge.openforecast.DataSet;
@@ -36,7 +38,7 @@ public class TestAutoForecast {
         InputStream is = new FileInputStream(configFile);
         Properties p = new Properties();
         p.load(is);
-        ArrayList<TimeSeries> metrics = com.yahoo.egads.utilities.FileUtils
+        ArrayList<TimeSeries> metrics = com.viewhigh.timeseries.utilities.FileUtils
                 .createTimeSeries("src/test/resources/sample_input.csv", p);
         AutoForecastModel model = new AutoForecastModel(p);
         model.train(metrics.get(0).data);

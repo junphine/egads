@@ -7,10 +7,12 @@
 // A utility for creating an array of timeseries objects from the
 // csv file.
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
 
-import com.yahoo.egads.data.TimeSeries;
 import java.util.StringTokenizer;
+
+import com.viewhigh.timeseries.data.TimeSeries;
+
 import java.util.ArrayList;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -56,7 +58,7 @@ public class FileUtils {
                 
                 // Check for the case where there is more than one line preceding the data 
                 if (firstLine == true) {
-                    if (!isNumeric(tokens[0]) && (tokens[0].equals("timestamp") == false && tokens[0].equals("year") == false)) {
+                    if (!isNumeric(tokens[0]) && tokens[0].equals("timestamp") == false) {
                         continue;
                     }
                 }

@@ -4,14 +4,16 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads;
+package com.viewhigh.timeseries;
 
 import java.util.ArrayList;
 import org.testng.Assert;
 import java.util.Properties;
 import org.testng.annotations.Test;
-import com.yahoo.egads.data.TimeSeries;
-import com.yahoo.egads.models.adm.AdaptiveKernelDensityChangePointDetector;
+
+import com.viewhigh.timeseries.data.TimeSeries;
+import com.viewhigh.timeseries.models.adm.AdaptiveKernelDensityChangePointDetector;
+
 import java.io.InputStream;
 import java.io.FileInputStream;
 
@@ -23,10 +25,10 @@ public class TestChangePointDetectionAlgorithm {
         Properties p = new Properties();
         p.load(is);
         TimeSeries observedTS =
-                        com.yahoo.egads.utilities.FileUtils
+                        com.viewhigh.timeseries.utilities.FileUtils
                                         .createTimeSeries("src/test/resources/cp-obs.csv", p).get(0);
         TimeSeries expectedTS =
-                        com.yahoo.egads.utilities.FileUtils
+                        com.viewhigh.timeseries.utilities.FileUtils
                                         .createTimeSeries("src/test/resources/cp-exp.csv", p).get(0);
 
         int n = observedTS.size();

@@ -6,7 +6,7 @@
 
 // Utility class for date/time formatting and conversion
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

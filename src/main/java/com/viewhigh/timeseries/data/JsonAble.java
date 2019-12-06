@@ -7,7 +7,7 @@
 // interface
 // Implementing classes can use JsonEncoder to help implement these methods.
 
-package com.yahoo.egads.data;
+package com.viewhigh.timeseries.data;
 
 import org.json.JSONObject;
 import org.json.JSONStringer;

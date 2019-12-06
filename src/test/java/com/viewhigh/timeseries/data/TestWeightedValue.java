@@ -3,7 +3,7 @@
  * Copyrights licensed under the GPL License.
  * See the accompanying LICENSE file for terms.
  */
-package com.yahoo.egads.data;
+package com.viewhigh.timeseries.data;
 
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertTrue;
@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.testng.annotations.Test;
+
+import com.viewhigh.timeseries.data.WeightedValue;
 
 public class TestWeightedValue {
 

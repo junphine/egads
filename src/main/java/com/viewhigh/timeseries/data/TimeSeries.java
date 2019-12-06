@@ -6,7 +6,7 @@
 
 // data structure for time series data
 
-package com.yahoo.egads.data;
+package com.viewhigh.timeseries.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -36,6 +36,19 @@ public class TimeSeries implements JsonAble, Serializable {
             value = e.value;
         }
 
+        @Override
+        public String toString() {
+          return new StringBuffer()
+              .append("{time=")
+              .append(time)
+              .append(", value=")
+              .append(value)
+              .append(", logicalIndex=")
+              .append(logicalIndex)
+              .append("}")
+              .toString();
+        }
+        
         public void toJson(JSONStringer json_out) throws Exception {
             JsonEncoder.toJson(this, json_out);
         }
@@ -302,6 +315,7 @@ public class TimeSeries implements JsonAble, Serializable {
 
     // display ////////////////////////////////////////////////
 
+    @Override
     public String toString() {
         StringBuffer str = new StringBuffer();
         for (int i = 0; i < data.size(); ++i) {

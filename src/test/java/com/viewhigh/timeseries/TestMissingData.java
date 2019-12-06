@@ -7,11 +7,13 @@
 // a standalone working main method for the main
 // EGADS application.
 
-package com.yahoo.egads;
+package com.viewhigh.timeseries;
 
-import com.yahoo.egads.data.TimeSeries;
 import java.util.ArrayList;
 import org.testng.annotations.Test;
+
+import com.viewhigh.timeseries.data.TimeSeries;
+
 import org.testng.Assert;
 import java.io.InputStream;
 import java.io.FileInputStream;
@@ -30,7 +32,7 @@ public class TestMissingData {
         p.setProperty("PERIOD", "0");
         p.setProperty("FILL_MISSING", "1");
         
-        ArrayList<TimeSeries> metrics = com.yahoo.egads.utilities.FileUtils
+        ArrayList<TimeSeries> metrics = com.viewhigh.timeseries.utilities.FileUtils
                  .createTimeSeries(csv_file, p);
         Assert.assertEquals(metrics.get(0).data.size(), 1433);
     }

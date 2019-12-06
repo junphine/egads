@@ -28,12 +28,12 @@
  * logical_index = (UNIX_timestamp - firstTimeStamp) div period UNIX_timestamp = logical_index * period + firstTimeStamp
  */
 
-package com.yahoo.egads.control;
+package com.viewhigh.timeseries.control;
 
 import java.util.ArrayList;
 
-import com.yahoo.egads.data.TimeSeries;
-import com.yahoo.egads.models.tsmm.TimeSeriesModel;
+import com.viewhigh.timeseries.data.TimeSeries;
+import com.viewhigh.timeseries.models.tsmm.TimeSeriesModel;
 
 public class ModelAdapter { // Encapsulates a metric and the models operating on it
 

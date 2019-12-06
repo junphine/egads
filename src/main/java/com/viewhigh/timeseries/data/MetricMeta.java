@@ -7,7 +7,7 @@
 // data structure class
 // Contains meta-data about a metric.
 
-package com.yahoo.egads.data;
+package com.viewhigh.timeseries.data;
 
 import org.json.JSONObject;
 import org.json.JSONStringer;

@@ -6,16 +6,16 @@
 
 // Null model, returns prediction the same as a prediction.
 
-package com.yahoo.egads.models.tsmm;
-
-import com.yahoo.egads.data.*;
-import com.yahoo.egads.data.TimeSeries.Entry;
+package com.viewhigh.timeseries.models.tsmm;
 
 import java.util.Properties;
+
+import com.viewhigh.timeseries.data.*;
+import com.viewhigh.timeseries.data.TimeSeries.Entry;
+import com.viewhigh.timeseries.utilities.FileUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
-
-import com.yahoo.egads.utilities.FileUtils;
 
 public class NullModel extends TimeSeriesAbstractModel {
     // methods ////////////////////////////////////////////////

@@ -4,15 +4,15 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads;
-
-import com.yahoo.egads.control.ProcessableObject;
-import com.yahoo.egads.control.ProcessableObjectFactory;
-import com.yahoo.egads.data.Anomaly;
-import com.yahoo.egads.data.TimeSeries;
+package com.viewhigh.timeseries;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.viewhigh.timeseries.control.ProcessableObject;
+import com.viewhigh.timeseries.control.ProcessableObjectFactory;
+import com.viewhigh.timeseries.data.Anomaly;
+import com.viewhigh.timeseries.data.TimeSeries;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -59,7 +59,7 @@ public class TestGetAnomalyList {
         p.setProperty("MAX_ANOMALY_TIME_AGO","0");
         p.setProperty("OP_TYPE","DETECT_ANOMALY");
 
-        ArrayList<TimeSeries> metrics = com.yahoo.egads.utilities.FileUtils
+        ArrayList<TimeSeries> metrics = com.viewhigh.timeseries.utilities.FileUtils
             .createTimeSeries("src/test/resources/sample_input.csv", p);
 
         // generate expected result

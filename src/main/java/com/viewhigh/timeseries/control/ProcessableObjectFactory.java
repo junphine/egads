@@ -6,15 +6,14 @@
 
 // A factory to create tasks based on the data and the config.
 
-package com.yahoo.egads.control;
-
-import com.yahoo.egads.data.TimeSeries;
+package com.viewhigh.timeseries.control;
 
 import java.lang.reflect.Constructor;
 import java.util.Properties;
 
-import com.yahoo.egads.models.adm.*;
-import com.yahoo.egads.models.tsmm.*;
+import com.viewhigh.timeseries.data.TimeSeries;
+import com.viewhigh.timeseries.models.adm.*;
+import com.viewhigh.timeseries.models.tsmm.*;
 
 public class ProcessableObjectFactory {
 

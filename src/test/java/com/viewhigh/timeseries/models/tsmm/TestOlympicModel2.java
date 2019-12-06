@@ -3,7 +3,7 @@
  * Copyrights licensed under the GPL License.
  * See the accompanying LICENSE file for terms.
  */
-package com.yahoo.egads.models.tsmm;
+package com.viewhigh.timeseries.models.tsmm;
 
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertFalse;
@@ -18,7 +18,8 @@ import org.apache.commons.lang.NotImplementedException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.yahoo.egads.data.TimeSeries;
+import com.viewhigh.timeseries.data.TimeSeries;
+import com.viewhigh.timeseries.models.tsmm.OlympicModel2;
 
 public class TestOlympicModel2 {
     private Properties config;

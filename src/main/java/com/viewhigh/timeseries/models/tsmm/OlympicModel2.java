@@ -3,7 +3,7 @@
  * Copyrights licensed under the GPL License.
  * See the accompanying LICENSE file for terms.
  */
-package com.yahoo.egads.models.tsmm;
+package com.viewhigh.timeseries.models.tsmm;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -18,11 +18,9 @@ import org.apache.commons.math3.util.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.yahoo.egads.data.TimeSeries.Entry;
-import com.yahoo.egads.data.WeightedValue;
-//import com.google.common.annotations.VisibleForTesting;
-
-import com.yahoo.egads.data.TimeSeries.DataSequence;
+import com.viewhigh.timeseries.data.WeightedValue;
+import com.viewhigh.timeseries.data.TimeSeries.DataSequence;
+import com.viewhigh.timeseries.data.TimeSeries.Entry;
 
 /**
  * TODO - rename this!

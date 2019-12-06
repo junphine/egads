@@ -6,20 +6,20 @@
 
 // A simple thresholding model that returns an anomaly if it is above/below a certain threashold.
 
-package com.yahoo.egads.models.adm;
+package com.viewhigh.timeseries.models.adm;
 
 import java.util.Properties;
-
-import com.yahoo.egads.data.Anomaly.IntervalSequence;
-import com.yahoo.egads.data.Anomaly.Interval;
-import com.yahoo.egads.data.TimeSeries;
-import com.yahoo.egads.data.TimeSeries.DataSequence;
-import com.yahoo.egads.utilities.AutoSensitivity;
 import java.util.Map;
 import java.util.HashMap;
 
 import org.json.JSONObject;
 import org.json.JSONStringer;
+
+import com.viewhigh.timeseries.data.TimeSeries;
+import com.viewhigh.timeseries.data.Anomaly.Interval;
+import com.viewhigh.timeseries.data.Anomaly.IntervalSequence;
+import com.viewhigh.timeseries.data.TimeSeries.DataSequence;
+import com.viewhigh.timeseries.utilities.AutoSensitivity;
 
 public class SimpleThresholdModel extends AnomalyDetectionAbstractModel {
 
@@ -27,7 +27,7 @@ public class SimpleThresholdModel extends AnomalyDetectionAbstractModel {
     // needed for the simple model. This includes the sensitivity.
     private Map<String, Float> threshold;
     private int maxHrsAgo;
-    
+    private long windowStart;
     // Model name.
     private String modelName = "SimpleThresholdModel";
     private String simpleThrType = "AdaptiveKSigmaSensitivity";
@@ -37,6 +37,7 @@ public class SimpleThresholdModel extends AnomalyDetectionAbstractModel {
         
         this.threshold = parseMap(config.getProperty("THRESHOLD"));
         this.maxHrsAgo = new Integer(config.getProperty("MAX_ANOMALY_TIME_AGO"));
+        this.windowStart = new Long(config.getProperty("DETECTION_WINDOW_START_TIME"));
         if (config.getProperty("THRESHOLD") != null && this.threshold.isEmpty() == true) {
             throw new IllegalArgumentException("THRESHOLD PARSE ERROR");
         } 
@@ -88,12 +89,12 @@ public class SimpleThresholdModel extends AnomalyDetectionAbstractModel {
             DataSequence expectedSeries) throws Exception {
         IntervalSequence output = new IntervalSequence();
         Float[] thr = new Float[] {threshold.get("max"), threshold.get("min")};
-        long unixTime = System.currentTimeMillis() / 1000L;
         int n = observedSeries.size();
         for (int i = 0; i < n; i++) {
             TimeSeries.Entry entry = observedSeries.get(i);
             
-            if (((thr[0] != null && entry.value >= thr[0]) || (thr[1] != null && entry.value <= thr[1])) && ((((unixTime - entry.time) / 3600) < maxHrsAgo) || (maxHrsAgo == 0 && i == (n - 1)))) {
+            if (((thr[0] != null && entry.value >= thr[0]) || (thr[1] != null && entry.value <= thr[1])) &&
+                (isDetectionWindowPoint(maxHrsAgo, windowStart, entry.time, observedSeries.get(0).time) || (maxHrsAgo == 0 && i == (n - 1)))) {
                 if (thr[0] != null && entry.value >= thr[0]) {
                     output.add(new Interval(entry.time, i, null, thr, entry.value, thr[0]));
                 } else {

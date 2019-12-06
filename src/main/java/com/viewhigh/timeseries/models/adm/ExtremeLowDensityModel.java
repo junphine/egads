@@ -6,20 +6,21 @@
 
 // A simple thresholding model that returns an anomaly if it is above/below a certain threashold.
 
-package com.yahoo.egads.models.adm;
+package com.viewhigh.timeseries.models.adm;
 
 import java.util.Properties;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
-import com.yahoo.egads.data.Anomaly.IntervalSequence;
-import com.yahoo.egads.data.Anomaly.Interval;
-import com.yahoo.egads.data.AnomalyErrorStorage;
-import com.yahoo.egads.data.TimeSeries.DataSequence;
-import com.yahoo.egads.utilities.AutoSensitivity;
 
 import org.json.JSONObject;
 import org.json.JSONStringer;
+
+import com.viewhigh.timeseries.data.AnomalyErrorStorage;
+import com.viewhigh.timeseries.data.Anomaly.Interval;
+import com.viewhigh.timeseries.data.Anomaly.IntervalSequence;
+import com.viewhigh.timeseries.data.TimeSeries.DataSequence;
+import com.viewhigh.timeseries.utilities.AutoSensitivity;
 
 public class ExtremeLowDensityModel extends AnomalyDetectionAbstractModel {
 
@@ -27,6 +28,7 @@ public class ExtremeLowDensityModel extends AnomalyDetectionAbstractModel {
     // needed for the simple model. This includes the sensitivity.
     private Map<String, Float> threshold;
     private int maxHrsAgo;
+    private long windowStart;
     // modelName.
     public String modelName = "ExtremeLowDensityModel";
     public AnomalyErrorStorage aes = new AnomalyErrorStorage();
@@ -38,7 +40,9 @@ public class ExtremeLowDensityModel extends AnomalyDetectionAbstractModel {
             throw new IllegalArgumentException("MAX_ANOMALY_TIME_AGO is NULL");
         }
         this.maxHrsAgo = new Integer(config.getProperty("MAX_ANOMALY_TIME_AGO"));
-        
+
+        this.windowStart = new Long(config.getProperty("DETECTION_WINDOW_START_TIME"));
+
         this.threshold = parseMap(config.getProperty("THRESHOLD"));
             
         if (config.getProperty("THRESHOLD") != null && this.threshold.isEmpty() == true) {
@@ -117,7 +121,6 @@ public class ExtremeLowDensityModel extends AnomalyDetectionAbstractModel {
         
         IntervalSequence output = new IntervalSequence();
         int n = observedSeries.size();
-        long unixTime = System.currentTimeMillis() / 1000L;
        
         for (int i = 0; i < n; i++) {
             Float[] errors = aes.computeErrorMetrics(expectedSeries.get(i).value, observedSeries.get(i).value);
@@ -125,7 +128,7 @@ public class ExtremeLowDensityModel extends AnomalyDetectionAbstractModel {
 			if (observedSeries.get(i).value != expectedSeries.get(i).value &&
 						threshSum > (float) 0.0 &&
 						isAnomaly(errors, threshold) == true &&
-						((((unixTime - observedSeries.get(i).time) / 3600) < maxHrsAgo) ||
+                        (isDetectionWindowPoint(maxHrsAgo, windowStart, observedSeries.get(i).time, observedSeries.get(0).time) ||
 						(maxHrsAgo == 0 && i == (n - 1)))) {
 				    output.add(new Interval(observedSeries.get(i).time,
 				    	i,

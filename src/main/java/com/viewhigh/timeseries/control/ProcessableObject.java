@@ -6,7 +6,7 @@
 
 // An interface for processable object.
 
-package com.yahoo.egads.control;
+package com.viewhigh.timeseries.control;
 
 public interface ProcessableObject {
 

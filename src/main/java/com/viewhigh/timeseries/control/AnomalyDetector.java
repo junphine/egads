@@ -35,14 +35,14 @@
  *         UNIX_timestamp = logical_index * period + firstTimeStamp
  **/
 
-package com.yahoo.egads.control;
+package com.viewhigh.timeseries.control;
 
 import java.util.ArrayList;
 
-import com.yahoo.egads.data.Anomaly;
-import com.yahoo.egads.data.Anomaly.IntervalSequence;
-import com.yahoo.egads.data.TimeSeries;
-import com.yahoo.egads.models.adm.AnomalyDetectionModel;
+import com.viewhigh.timeseries.data.Anomaly;
+import com.viewhigh.timeseries.data.TimeSeries;
+import com.viewhigh.timeseries.data.Anomaly.IntervalSequence;
+import com.viewhigh.timeseries.models.adm.AnomalyDetectionModel;
 
 public class AnomalyDetector {
 

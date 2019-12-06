@@ -9,7 +9,7 @@
 // If loss of precision is a concern, maybe switch to Knuth algorithm:
 // http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance#Incremental_algorithm
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
 
 public class Variance {
     // member data ////////////////////////////////////////////////

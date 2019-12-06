@@ -4,19 +4,18 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads;
-
-import com.yahoo.egads.data.TimeSeries;
+package com.viewhigh.timeseries;
 
 import java.util.ArrayList;
 import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-import com.yahoo.egads.control.ProcessableObject;
-import com.yahoo.egads.control.ProcessableObjectFactory;
-
 import org.testng.annotations.Test;
+
+import com.viewhigh.timeseries.control.ProcessableObject;
+import com.viewhigh.timeseries.control.ProcessableObjectFactory;
+import com.viewhigh.timeseries.data.TimeSeries;
 
 public class TestReflectionSpeed {
 
@@ -32,7 +31,7 @@ public class TestReflectionSpeed {
         p.load(is);
 
         // Parse the input timeseries.
-        ArrayList<TimeSeries> metrics = com.yahoo.egads.utilities.FileUtils.createTimeSeries(csv_file, p);
+        ArrayList<TimeSeries> metrics = com.viewhigh.timeseries.utilities.FileUtils.createTimeSeries(csv_file, p);
         long start = System.currentTimeMillis();
         for (TimeSeries ts : metrics) {
             ProcessableObject po = ProcessableObjectFactory.create(ts, p);

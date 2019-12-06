@@ -6,14 +6,14 @@
 
 // A template for doing Anomaly Detection.
 
-package com.yahoo.egads.control;
+package com.viewhigh.timeseries.control;
 
 import java.util.ArrayList;
-
-import com.yahoo.egads.data.Anomaly;
-import com.yahoo.egads.data.TimeSeries;
-import com.yahoo.egads.utilities.GUIUtils;
 import java.util.Properties;
+
+import com.viewhigh.timeseries.data.Anomaly;
+import com.viewhigh.timeseries.data.TimeSeries;
+import com.viewhigh.timeseries.utilities.GUIUtils;
 
 public class DetectAnomalyProcessable implements ProcessableObject {
     private ModelAdapter ma;

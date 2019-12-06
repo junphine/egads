@@ -7,16 +7,16 @@
 // Olympic scoring model considers the average of the last k weeks
 // (dropping the b highest and lowest values) as the current prediction.
 
-package com.yahoo.egads.models.tsmm;
-
-import com.yahoo.egads.data.*;
-import com.yahoo.egads.data.TimeSeries.Entry;
+package com.viewhigh.timeseries.models.tsmm;
 
 import java.util.Properties;
+
+import com.viewhigh.timeseries.data.*;
+import com.viewhigh.timeseries.data.TimeSeries.Entry;
+import com.viewhigh.timeseries.utilities.FileUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
-
-import com.yahoo.egads.utilities.FileUtils;
 
 public class OlympicModel extends TimeSeriesAbstractModel {
     // methods ////////////////////////////////////////////////

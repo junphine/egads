@@ -8,7 +8,7 @@
 // The generic model interface which other models implement (the TimeSeries model and the
 // AnomalyDetection model).
 
-package com.yahoo.egads.data;
+package com.viewhigh.timeseries.data;
 
 import java.io.Serializable;
 

@@ -4,22 +4,23 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads;
+package com.viewhigh.timeseries;
 
-import com.yahoo.egads.data.Model;
-import com.yahoo.egads.models.tsmm.OlympicModel;
-import com.yahoo.egads.models.adm.*;
-import com.yahoo.egads.data.Anomaly.IntervalSequence;
-import com.yahoo.egads.utilities.*;
-import com.yahoo.egads.data.*;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import com.yahoo.egads.control.ProcessableObject;
-import com.yahoo.egads.control.ProcessableObjectFactory;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.viewhigh.timeseries.control.ProcessableObject;
+import com.viewhigh.timeseries.control.ProcessableObjectFactory;
+import com.viewhigh.timeseries.data.*;
+import com.viewhigh.timeseries.data.Anomaly.IntervalSequence;
+import com.viewhigh.timeseries.models.adm.*;
+import com.viewhigh.timeseries.models.tsmm.OlympicModel;
+import com.viewhigh.timeseries.utilities.*;
 
 // Tests the basic anoamly detection piece of EGADS.
 public class TestAnomalyDetect {
@@ -35,7 +36,7 @@ public class TestAnomalyDetect {
         InputStream is = new FileInputStream(configFile);
         Properties p = new Properties();
         p.load(is);
-        ArrayList<TimeSeries> actual_metric = com.yahoo.egads.utilities.FileUtils
+        ArrayList<TimeSeries> actual_metric = com.viewhigh.timeseries.utilities.FileUtils
                 .createTimeSeries("src/test/resources/model_input.csv", p);
         p.setProperty("MAX_ANOMALY_TIME_AGO", "999999999");
         for (int w = 0; w < refWindows.length; w++) {
@@ -44,7 +45,7 @@ public class TestAnomalyDetect {
                  p.setProperty("NUM_TO_DROP", drops[d]);
                  p.setProperty("THRESHOLD", "mapee#100,mase#10");
                  // Parse the input timeseries.
-                 ArrayList<TimeSeries> metrics = com.yahoo.egads.utilities.FileUtils
+                 ArrayList<TimeSeries> metrics = com.viewhigh.timeseries.utilities.FileUtils
                             .createTimeSeries("src/test/resources/model_output_" + refWindows[w] + "_" + drops[d] + ".csv", p);
                  OlympicModel model = new OlympicModel(p);
                  model.train(actual_metric.get(0).data);

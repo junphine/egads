@@ -4,12 +4,14 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads;
+package com.viewhigh.timeseries;
 
-import com.yahoo.egads.utilities.StatsUtils;
 import java.util.ArrayList;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.viewhigh.timeseries.utilities.StatsUtils;
+
 import java.util.Random;
 
 // Tests the basic anoamly detection piece of EGADS.

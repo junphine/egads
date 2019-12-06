@@ -27,7 +27,7 @@
  *
  */
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -44,21 +44,17 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
 
-import com.yahoo.egads.data.TimeSeries;
-import com.yahoo.egads.data.TimeSeries.DataSequence;
-import com.yahoo.egads.data.Anomaly;
+import com.viewhigh.timeseries.data.Anomaly;
+import com.viewhigh.timeseries.data.AnomalyErrorStorage;
+import com.viewhigh.timeseries.data.TimeSeries;
+import com.viewhigh.timeseries.data.Anomaly.Interval;
+import com.viewhigh.timeseries.data.Anomaly.IntervalSequence;
+import com.viewhigh.timeseries.data.TimeSeries.DataSequence;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.yahoo.egads.data.Anomaly.IntervalSequence;
-import com.yahoo.egads.data.Anomaly.Interval;
-
 import java.awt.Color;
 import java.util.HashMap;
-
-import com.yahoo.egads.data.AnomalyErrorStorage;
-
 import java.util.Properties;
 
 import javax.swing.JFrame;

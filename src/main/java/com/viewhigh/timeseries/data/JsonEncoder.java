@@ -8,7 +8,7 @@
 // Helps any object encode its member variables as JSON.
 // Any JsonAble object can customize its encoding in its own to/fromJson() function
 
-package com.yahoo.egads.data;
+package com.viewhigh.timeseries.data;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

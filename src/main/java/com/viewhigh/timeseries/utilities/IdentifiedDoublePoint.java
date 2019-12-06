@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
 
 import org.apache.commons.math3.ml.clustering.Clusterable;
 import org.apache.commons.math3.ml.clustering.DoublePoint;

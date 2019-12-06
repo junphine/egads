@@ -3,7 +3,7 @@
  * Copyrights licensed under the GPL License.
  */
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;

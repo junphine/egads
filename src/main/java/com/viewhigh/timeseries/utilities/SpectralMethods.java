@@ -4,7 +4,7 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -14,7 +14,7 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.SingularValueDecomposition;
 
-import com.yahoo.egads.data.TimeSeries;
+import com.viewhigh.timeseries.data.TimeSeries;
 
 /**
  * SpectralMethods implements utility functions for:

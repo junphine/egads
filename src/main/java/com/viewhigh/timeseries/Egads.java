@@ -1,11 +1,13 @@
 // main entry point for egads processing node
 
-package com.yahoo.egads;
+package com.viewhigh.timeseries;
 
 import java.util.Properties;
+
+import com.viewhigh.timeseries.utilities.*;
+
 import java.io.FileInputStream;
 import java.io.InputStream;
-import com.yahoo.egads.utilities.*;
 import java.io.File;
 
 /*

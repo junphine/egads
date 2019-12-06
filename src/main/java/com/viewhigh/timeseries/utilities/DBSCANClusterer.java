@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
  
 import java.util.ArrayList;
 import java.util.Collection;

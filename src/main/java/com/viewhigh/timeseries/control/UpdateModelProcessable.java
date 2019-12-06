@@ -6,10 +6,11 @@
 
 // A template for updateing the model given the data and the model config.
 
-package com.yahoo.egads.control;
+package com.viewhigh.timeseries.control;
 
-import com.yahoo.egads.data.TimeSeries;
 import java.util.Properties;
+
+import com.viewhigh.timeseries.data.TimeSeries;
 
 public class UpdateModelProcessable implements ProcessableObject {
 

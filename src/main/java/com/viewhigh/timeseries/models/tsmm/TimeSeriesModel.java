@@ -6,10 +6,10 @@
 
 // interface
 
-package com.yahoo.egads.models.tsmm;
+package com.viewhigh.timeseries.models.tsmm;
 
-import com.yahoo.egads.data.TimeSeries;
-import com.yahoo.egads.data.Model;
+import com.viewhigh.timeseries.data.Model;
+import com.viewhigh.timeseries.data.TimeSeries;
 
 public interface TimeSeriesModel extends Model {
     // methods ////////////////////////////////////////////////

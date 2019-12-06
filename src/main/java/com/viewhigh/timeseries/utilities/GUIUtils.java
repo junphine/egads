@@ -27,7 +27,7 @@
  *
  */
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
 
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -43,14 +43,16 @@ import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
-import com.yahoo.egads.data.TimeSeries.DataSequence;
-import com.yahoo.egads.data.Anomaly;
+
+import com.viewhigh.timeseries.data.Anomaly;
+import com.viewhigh.timeseries.data.AnomalyErrorStorage;
+import com.viewhigh.timeseries.data.Anomaly.Interval;
+import com.viewhigh.timeseries.data.Anomaly.IntervalSequence;
+import com.viewhigh.timeseries.data.TimeSeries.DataSequence;
+
 import java.util.ArrayList;
-import com.yahoo.egads.data.Anomaly.IntervalSequence;
-import com.yahoo.egads.data.Anomaly.Interval;
 import java.awt.Color;
 import java.util.HashMap;
-import com.yahoo.egads.data.AnomalyErrorStorage;
 import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -205,6 +207,6 @@ public class GUIUtils extends ApplicationFrame {
         JFrame frame = new JFrame("EGADS GUI");
         JOptionPane.showMessageDialog(frame, "Click OK to continue");
         gui.setVisible(false);
-        gui.dispose();
+        //gui.dispose();
     }
 }

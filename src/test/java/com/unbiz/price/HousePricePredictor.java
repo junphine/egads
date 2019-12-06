@@ -6,12 +6,12 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import com.yahoo.egads.control.ProcessableObject;
-import com.yahoo.egads.control.ProcessableObjectFactory;
-import com.yahoo.egads.data.Anomaly;
-import com.yahoo.egads.data.TimeSeries;
-import com.yahoo.egads.utilities.FileUtils;
-import com.yahoo.egads.utilities.PlotUtils;
+import com.viewhigh.timeseries.control.ProcessableObject;
+import com.viewhigh.timeseries.control.ProcessableObjectFactory;
+import com.viewhigh.timeseries.data.Anomaly;
+import com.viewhigh.timeseries.data.TimeSeries;
+import com.viewhigh.timeseries.utilities.FileUtils;
+import com.viewhigh.timeseries.utilities.PlotUtils;
 
 import net.sourceforge.openforecast.DataPoint;
 import net.sourceforge.openforecast.DataSet;

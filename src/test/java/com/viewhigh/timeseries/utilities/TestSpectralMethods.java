@@ -4,13 +4,15 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
 
 import java.util.Arrays;
 
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.testng.annotations.Test;
+
+import com.viewhigh.timeseries.utilities.SpectralMethods;
 
 public class TestSpectralMethods {
     @Test

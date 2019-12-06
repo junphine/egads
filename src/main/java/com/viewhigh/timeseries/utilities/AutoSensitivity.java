@@ -7,14 +7,18 @@
 // Provides the auto-sensitivity solution for EGADS
 // using the bootstrapping framework.
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
 import java.util.ArrayList;
 import org.apache.commons.lang.ArrayUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Arrays;
 import java.util.Collections;
 
 public class AutoSensitivity {
-	static org.apache.logging.log4j.Logger logger = org.apache.logging.log4j.LogManager.getLogger(AutoSensitivity.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(AutoSensitivity.class);
+  
     // Computes sensitivity based on the density distribution.
     // Assumes that anomalies constitute at most 5% of the data.
     public static Float getLowDensitySensitivity(Float[] data, float sDAutoSensitivy, float amntAutoSensitivity) {

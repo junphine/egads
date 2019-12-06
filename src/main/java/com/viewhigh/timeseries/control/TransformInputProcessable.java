@@ -4,14 +4,13 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads.control;
+package com.viewhigh.timeseries.control;
 
 import java.util.ArrayList;
-
-import com.yahoo.egads.data.TimeSeries;
-
 import java.util.List;
 import java.util.Properties;
+
+import com.viewhigh.timeseries.data.TimeSeries;
 
 public class TransformInputProcessable implements ProcessableObject {
     private ModelAdapter ma;

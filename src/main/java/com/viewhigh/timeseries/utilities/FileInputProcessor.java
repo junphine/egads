@@ -4,14 +4,14 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads.utilities;
+package com.viewhigh.timeseries.utilities;
 
-// Class that implements EGADS file input processing.
-
-import com.yahoo.egads.control.ProcessableObject;
-import com.yahoo.egads.control.ProcessableObjectFactory;
 import java.util.Properties;
-import com.yahoo.egads.data.TimeSeries;
+
+import com.viewhigh.timeseries.control.ProcessableObject;
+import com.viewhigh.timeseries.control.ProcessableObjectFactory;
+import com.viewhigh.timeseries.data.TimeSeries;
+
 import java.util.ArrayList;
 
 public class FileInputProcessor implements InputProcessor {
@@ -24,7 +24,7 @@ public class FileInputProcessor implements InputProcessor {
     
     public void processInput(Properties p) throws Exception {
         // Parse the input timeseries.
-        ArrayList<TimeSeries> metrics = com.yahoo.egads.utilities.FileUtils
+        ArrayList<TimeSeries> metrics = com.viewhigh.timeseries.utilities.FileUtils
                 .createTimeSeries(this.file, p);
         for (TimeSeries ts : metrics) {
             ProcessableObject po = ProcessableObjectFactory.create(ts, p);

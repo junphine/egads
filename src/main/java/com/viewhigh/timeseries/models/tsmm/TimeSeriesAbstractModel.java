@@ -4,20 +4,27 @@
  * See the accompanying LICENSE file for terms.
  */
 
-package com.yahoo.egads.models.tsmm;
+package com.viewhigh.timeseries.models.tsmm;
 
 import java.util.Properties;
 
 import org.json.JSONObject;
 import org.json.JSONStringer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.yahoo.egads.data.*;
+import com.viewhigh.timeseries.data.*;
+import com.viewhigh.timeseries.data.TimeSeries.Entry;
 
+import java.lang.reflect.Field;
+import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import net.sourceforge.openforecast.DataPoint;
+import net.sourceforge.openforecast.DataSet;
 import net.sourceforge.openforecast.ForecastingModel;
-
-import com.yahoo.egads.data.JsonEncoder;
+import net.sourceforge.openforecast.Observation;
 
 public abstract class TimeSeriesAbstractModel implements TimeSeriesModel {
 
@@ -31,7 +38,7 @@ public abstract class TimeSeriesAbstractModel implements TimeSeriesModel {
     protected double sae;
     protected String modelName;
 
-    static org.apache.logging.log4j.Logger logger = org.apache.logging.log4j.LogManager.getLogger(TimeSeriesModel.class.getName());
+    static final Logger logger = LoggerFactory.getLogger(TimeSeriesAbstractModel.class);
 
     protected boolean errorsInit = false;
     protected int dynamicParameters = 0;
@@ -228,5 +235,26 @@ public abstract class TimeSeriesAbstractModel implements TimeSeriesModel {
             return -1;
         }
         return sae;
+    }    
+   
+    public ForecastingModel getForecastingModel() {    	
+    	Field fd;
+		try {
+			fd = this.getClass().getDeclaredField("forecaster");
+			fd.setAccessible(true);
+			ForecastingModel model = (ForecastingModel)fd.get(this);
+			return model;
+		} catch (NoSuchFieldException | SecurityException e) {
+			// TODO Auto-generated catch block
+			
+			
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return null;
     }
 }
